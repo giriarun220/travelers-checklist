@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Travel Checklist</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    .check {
+      width: 20px;
+    }
+
+    .check input[type="checkbox"] {
+      margin-left: 5px;
+    }
+
+    div {
+      margin-bottom: 10px;
+    }
+
+    label {
+      display: inline-block;
+      width: 100px;
+    }
+
+    input[type="email"],
+    input[type="text"] {
+      width: 200px;
+    }
+
+    button {
+      display: block;
+      margin: 20px auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>Travel Checklist</h1>
+  <table>
+    <tr>
+      <th>Category</th>
+      <th>Essentials</th>
+      <th>Additional Items</th>
+      <th>Check</th>
+    </tr>
+    <!-- Add all the rows of the checklist here -->
+    <tr>
+      <td>Clothing</td>
+      <td>Underwear, socks, and bras</td>
+      <td>Jacket or coat (weather-dependent)</td>
+      <td class="check"><input type="checkbox" data-item="Jacket or coat"></td>
+    </tr>
+    <!-- Add more rows here -->
+    <tr>
+          <td>Toiletries</td>
+          <td>Toothbrush and toothpaste</td>
+          <td>Deodorant</td>
+          <td><input type="checkbox"></td>
+        </tr>
+        <tr>
+          <td>Electronics</td>
+          <td>Phone and charger</td>
+          <td>Portable charger/power bank</td>
+          <td><input type="checkbox"></td>
+        </tr>
+        <tr>
+          <td>Travel Documents</td>
+          <td>Passport and visa (if required)</td>
+          <td>Driver's license or ID card</td>
+          <td><input type="checkbox"></td>
+        </tr>
+        <tr>
+          <td>Money and Cards</td>
+          <td>Cash (local currency and some USD)</td>
+          <td>Credit/debit cards</td>
+          <td><input type="checkbox"></td>
+        </tr>
+        <tr>
+          <td>Miscellaneous</td>
+          <td>Travel-sized laundry detergent</td>
+          <td>Travel pillow and blanket</td>
+          <td><input type="checkbox"></td>
+        </tr>
+  </table>
+  <div>
+    <label for="email">Email:</label>
+    <input type="email" id="email" required>
+  </div>
+  <div>
+    <label for="destination">Destination:</label>
+    <input type="text" id="destination" required>
+  </div>
+  <button id="downloadBtn">Download Checklist</button>
+
+  <script src="https://unpkg.com/@github/rest-api-axios@1.2.8/dist/index.js"></script>
+  <script src="https://unpkg.com/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
+  <script>
+    document.getElementById("downloadBtn").addEventListener("click", function () {
+      const element = document.querySelector("table");
+      const email = document.getElementById("email").value;
+      const destination = document.getElementById("destination").value;
+
+      // Create a PDF document with the checklist
+      html2pdf().from(element).save("travel_checklist.pdf");
+
+      // Save the email and destination to GitHub repository
+      const gh = new GitHub();
+      const repo = gh.getRepo("giriarun220", "travelers-checklist");
+      const path = "data.json";
+      const content = JSON.stringify({ email, destination });
+      const token = "[personal-access-token]";
+
+      repo
+        .createFile(token, "main", path, content, "Adding email and destination data")
+        .then(() => {
+          alert("Email and destination saved successfully!");
+        })
+        .catch((error) => {
+          console.error(error);
+          alert("An error occurred while saving the email and destination.");
+        });
+    });
+  </script>
+</body>
+</html>
