@@ -2,65 +2,77 @@
 <html>
 <head>
   <title>Travel Checklist</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-    }
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- <script type="text/javascript" src="jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 
-    h1 {
-      text-align: center;
-    }
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
 
-    table {
-      border-collapse: collapse;
-      width: 100%;
-    }
-
-    th, td {
-      padding: 10px;
-      text-align: left;
-    }
-
-    th {
-      background-color: #f2f2f2;
-    }
-
-    tr:nth-child(even) {
-      background-color: #f9f9f9;
-    }
-
-    .check {
-      width: 20px;
-    }
-
-    .check input[type="checkbox"] {
-      margin-left: 5px;
-    }
-
-    div {
-      margin-bottom: 10px;
-    }
-
-    label {
-      display: inline-block;
-      width: 100px;
-    }
-
-    input[type="email"],
-    input[type="text"] {
-      width: 200px;
-    }
-
-    button {
-      display: block;
-      margin: 20px auto;
-    }
-  </style>
 </head>
 <body>
+    <!-- <nav class="navbar">
+    <div class="logo">
+      <a href="https://protravelassist.com"><img src="https://protravelassist.com/wp-content/uploads/2022/10/PRO_TRAVEL_ASSSIT-LOGO-e1666981053636.png" alt="Pro Travel Assist"></a>
+    </div>
+    <div class="menu">
+      <ul>
+        <li><a href="https://protravelassist.com/flights">Book Flights</a></li>
+        <li><a href="https://protravelassist.com/hotels">Book Hotels</a></li>
+        <li><a href="https://protravelassist.com/Activities">Activities</a></li>
+        <li><a href="https://protravelassist.com/blog">Blog</a></li>
+        <li><a href="https://protravelassist.com/Compensair">Compensair</a></li>
+      </ul>
+    </div>
+    <div class="social-icons">
+      <a href="#"><i class="fab fa-pinterest"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-facebook"></i></a>
+      <a href="#"><i class="fab fa-youtube"></i></a>
+    </div>
+    <div class="hamburger" id="hamburger-menu">
+      <div class="line"></div>
+      <div class="line"></div>
+      <div class="line"></div>
+    </div>
+    <div class="menu" id="hamburger-dropdown">
+      <ul>
+        <li><a href="#">Book Flights</a></li>
+        <li><a href="#">Book Hotels</a></li>
+        <li><a href="#">Taxi</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Compensair</a></li>
+      </ul>
+    </div>
+  </nav> -->
+   <header>
+    <div class="logo">
+      <img src="https://protravelassist.com/wp-content/uploads/2022/10/PRO_TRAVEL_ASSSIT-LOGO-e1666981053636.png" alt="PRO TRAVEL ASSIST">
+    </div>
+    <nav class="navbar" id="myTopnav">
+      <a href="https://protravelassist.com" class="active">Home</a>
+      <a href="https://protravelassist.com/flights">Book Flights</a>
+      <a href="https://protravelassist.com/hotels">Book Hotels</a>
+      <a href="https://protravelassist.com/taxi">Taxi</a>
+      <a href="https://protravelassist.com/blog">Blog</a>
+      <a href="https://protravelassist.com/Compensair">Compensair</a>
+      <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+        <i class="fa fa-bars"></i>
+      </a>
+    </nav>
+    <div class="social-icons">
+      <a href="#"><i class="fa fa-pinterest"></i></a>
+      <a href="#"><i class="fa fa-twitter"></i></a>
+      <a href="#"><i class="fa fa-facebook"></i></a>
+      <a href="#"><i class="fa fa-youtube"></i></a>
+    </div>
+  </header>
   <h1>Travel Checklist</h1>
-  <table>
+  <table id="checklist-table">
     <tr>
       <th>Category</th>
       <th>Essentials</th>
@@ -108,8 +120,8 @@
   </table>
   <button id="add-more-btn">Add More Category</button>
   <div>
-    <label for="email">Email:</label>
-    <input type="email" id="email" required>
+    <label for="name">Name:</label>
+    <input type="text" id="name" required>
   </div>
   <div>
     <label for="destination">Destination:</label>
@@ -117,47 +129,63 @@
   </div>
   <button id="downloadBtn">Download Checklist</button>
 
-  <script src="https://unpkg.com/@github/rest-api-axios@1.2.8/dist/index.js"></script>
+ <!--  <script src="https://unpkg.com/@github/rest-api-axios@1.2.8/dist/index.js"></script> -->
   <script src="https://unpkg.com/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
   <script>
-    const addMoreBtn = document.getElementById('add-more-btn');
-    const checklistTable = document.getElementById('checklist-table');
+ // for hamburger
+        function myFunction() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "navbar") {
+    x.className += " responsive";
+  } else {
+    x.className = "navbar";
+  }
+}
+ //for addmore
+ document.getElementById("add-more-btn").addEventListener("click", function () {
+  const checklistTable = document.getElementById('checklist-table');
+  const newRow = document.createElement("tr");
+  newRow.innerHTML = `
+    <td contenteditable class="placeholder">Add More...</td>
+    <td contenteditable class="placeholder">Add More...</td>
+    <td contenteditable class="placeholder">Add More...</td>
+    <td><input type="checkbox"></td>
+  `;
+  checklistTable.appendChild(newRow);
+});
+//  for downoad Pdf
+  document.getElementById("downloadBtn").addEventListener("click", function () {
+  const checklistTable = document.getElementById("checklist-table");
+  const email = document.getElementById("name").value;
+  const destination = document.getElementById("destination").value;
 
-    addMoreBtn.addEventListener('click', () => {
-      const newRow = document.createElement('tr');
-      newRow.innerHTML = `
-        <td contenteditable></td>
-        <td contenteditable></td>
-        <td contenteditable></td>
-        <td><input type="checkbox"></td>
-      `;
-      checklistTable.appendChild(newRow);
-    });
-    document.getElementById("downloadBtn").addEventListener("click", function () {
-      const element = document.querySelector("table");
-      const email = document.getElementById("email").value;
-      const destination = document.getElementById("destination").value;
+  // Create a new instance of jsPDF
+  const pdf = new jspdf.jsPDF();
 
-      // Create a PDF document with the checklist
-      html2pdf().from(element).save("travel_checklist.pdf");
+  // Set the starting position for the table
+  let startY = 40;
 
-      // Save the email and destination to GitHub repository
-      const gh = new GitHub();
-      const repo = gh.getRepo("giriarun220", "travelers-checklist");
-      const path = "data.json";
-      const content = JSON.stringify({ email, destination });
-      const token = "[personal-access-token]";
+  // Add the email and destination to the PDF
+  pdf.setFontSize(14);
+  pdf.text("Name: " + name, 20, 30);
+  pdf.text("Destination: " + destination, 20, 35);
 
-      repo
-        .createFile(token, "main", path, content, "Adding email and destination data")
-        .then(() => {
-          alert("Email and destination saved successfully!");
-        })
-        .catch((error) => {
-          console.error(error);
-          alert("An error occurred while saving the email and destination.");
-        });
-    });
+  // Convert the table to a JavaScript array
+  const tableData = Array.from(checklistTable.rows).map((row) =>
+    Array.from(row.cells).map((cell) => cell.innerText.trim())
+  );
+
+  // Generate the table in the PDF
+  pdf.autoTable({
+    startY: startY,
+    head: [tableData[0]], // Use the first row as the table header
+    body: tableData.slice(1), // Use the remaining rows as the table body
+  });
+
+  // Save the PDF
+  pdf.save("travel_checklist.pdf");
+});
+   
   </script>
 </body>
 </html>
